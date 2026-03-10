@@ -1,16 +1,21 @@
-FROM ghcr.io/nforceroh/k8s-alpine-baseimage:latest
+FROM ghcr.io/nforceroh/k8s-alpine-baseimage:3.23
 
 ARG \
   BUILD_DATE=now \
-  VERSION=unknown
+  VERSION=unknown 
 
 LABEL \
-  maintainer="Sylvain Martin (sylvain@nforcer.com)"
+  org.label-schema.maintainer="Sylvain Martin (sylvain@nforcer.com)" \
+  org.label-schema.build-date="${BUILD_DATE}" \
+  org.label-schema.version="${VERSION}" \
+  org.label-schema.vcs-url="https://github.com/nforcer/k8s-idrac-fans" \
+  org.label-schema.vcs-ref="${VERSION}" \
+  org.label-schema.schema-version="1.0"
 
   # ENV IDRAC_HOST 192.168.1.100
 ENV \
   IDRAC_HOST=local \
-  IDRAC_USER=admin \
+  IDRAC_USERNAME=admin \
   FAN_SPEED=5 \
   CPU_TEMPERATURE_THRESHOLD=50 \
   CHECK_INTERVAL=60 \

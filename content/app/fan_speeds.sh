@@ -30,6 +30,9 @@ if [[ $IDRAC_HOST == "local" ]]; then
   fi
   IDRAC_LOGIN_STRING='open'
 else
+  if [[ -z "$IDRAC_USERNAME" && -n "$IDRAC_USER" ]]; then
+    IDRAC_USERNAME="$IDRAC_USER"
+  fi
   echo "iDRAC/IPMI username: $IDRAC_USERNAME"
   #echo "iDRAC/IPMI password: $IDRAC_PASSWORD"
   IDRAC_LOGIN_STRING="lanplus -H $IDRAC_HOST -U $IDRAC_USERNAME -P $IDRAC_PASSWORD"

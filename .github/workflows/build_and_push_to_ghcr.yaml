@@ -33,8 +33,8 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=semver,pattern=version
             type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ env.BUILD_DATE }}
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
             type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='US/Eastern'}}
           images: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}     
@@ -49,9 +49,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.BUILD_DATE }}
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             BUILD_DATE=${{ env.BUILD_DATE }}
