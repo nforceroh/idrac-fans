@@ -2,7 +2,7 @@ FROM ghcr.io/nforceroh/alpine-base:3.24
 
 ARG \
   BUILD_DATE=now \
-  VERSION=unknown 
+  VERSION=unknown
 
 LABEL \
   org.label-schema.maintainer="Sylvain Martin (sylvain@nforcer.com)" \
@@ -12,7 +12,6 @@ LABEL \
   org.label-schema.vcs-ref="${VERSION}" \
   org.label-schema.schema-version="1.0"
 
-  # ENV IDRAC_HOST 192.168.1.100
 ENV \
   IDRAC_HOST=local \
   IDRAC_USERNAME=admin \
@@ -23,7 +22,7 @@ ENV \
   KEEP_THIRD_PARTY_PCIE_CARD_COOLING_RESPONSE_STATE_ON_EXIT=false
 
 ### Install Dependencies
-RUN apk add --no-cache ipmitool grep
+RUN apk add --no-cache ipmitool grep && rm -rf /var/cache/apk/*
 
 ### Add Files
 ADD --chmod=755 /content/etc/s6-overlay /etc/s6-overlay
